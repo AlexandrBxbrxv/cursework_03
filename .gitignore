@@ -1,2 +1,8 @@
-test_field.py
+.idea/
 __pycache__/
+*.py[cod]
+venv/
+.env
+.cache/
+.pyc
+poetry.lock

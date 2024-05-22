@@ -2,7 +2,7 @@ import json
 
 
 def get_data():
-    with open('operations.json', 'rt', encoding='UTF-8') as file:
+    with open('../operations.json', 'rt', encoding='UTF-8') as file:
         j_data = file.read()
 
     data = json.loads(j_data)

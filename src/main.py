@@ -1,24 +1,32 @@
 from datetime import datetime
 from functions import get_data, censor
 
-executed = []
 
-for pos in get_data():
-    if pos.get('state') == 'EXECUTED':
-        executed.append(pos)
+def main():
+    executed = []
 
-new = sorted(executed, key=lambda x: datetime.strptime(x['date'], '%Y-%m-%dT%H:%M:%S.%f'), reverse=True)
+    for pos in get_data():
+        if pos.get('state') == 'EXECUTED':
+            executed.append(pos)
 
-for pos in new[:5]:
-    form = datetime.strptime(pos.get('date'), '%Y-%m-%dT%H:%M:%S.%f')
-    date = datetime.strftime(form, '%d.%m.%Y')
+    new = sorted(executed, key=lambda x: datetime.strptime(x['date'], '%Y-%m-%dT%H:%M:%S.%f'), reverse=True)
 
-    operation = pos.get('operationAmount')
-    sender = pos.get('from')
-    receiver = pos.get('to')
+    msg = []
+    for pos in new[:5]:
+        form = datetime.strptime(pos.get('date'), '%Y-%m-%dT%H:%M:%S.%f')
+        date = datetime.strftime(form, '%d.%m.%Y')
 
-    censored = censor(sender, receiver)
+        operation = pos.get('operationAmount')
+        sender = pos.get('from')
+        receiver = pos.get('to')
 
-    print(f'{date} {pos.get('description')}\n'
-          f'{censored[0]} -> {censored[1]}\n'
-          f'{operation.get('amount')} {operation.get('currency')['name']}\n')
+        censored = censor(sender, receiver)
+
+        msg.append (f'{date} {pos.get('description')}\n'
+                f'{censored[0]} -> {censored[1]}\n'
+                f'{operation.get('amount')} {operation.get('currency')['name']}')
+
+    return '\n\n'.join(msg)
+
+
+print(main())

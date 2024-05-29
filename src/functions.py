@@ -14,7 +14,6 @@ def censor(sender, receiver):
         censored_sender = 'Неизвестный'
     else:
         sender_nums = [i for i in str(sender).split(' ') if i.isnumeric()]
-        print(sender_nums)
         sender_nums = str(*sender_nums)
 
         box = []
@@ -38,6 +37,3 @@ def censor(sender, receiver):
     censored_receiver = f'**{(str(*censored_receiver)[-4:])}'
 
     return censored_sender, censored_receiver
-
-
-print(censor(None, 'Счет 96231448929365202391'))
